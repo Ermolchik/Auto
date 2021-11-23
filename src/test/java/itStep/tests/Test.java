@@ -1,9 +1,9 @@
 package itStep.tests;
 
 
+import io.qameta.allure.Story;
 import itStep.pages.LoginPage;
 import itStep.pages.MainPage;
-import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,19 +27,20 @@ public class Test {
         mainPage = new MainPage(driver);
     }
 
+    @DisplayName("Авторизация с валидными данными")
     @org.junit.jupiter.api.Test
-    @Description("Авторизация с валидными данными")
+    @Story("5.1")
     public void loginTest() {
         loginPage.sendLogin(LOGIN).
                 sendPassword(PASSWORD).
                 clickButton();
 
-        Assertions.assertEquals("Welcome Paul", driver.findElement(NAME_CLIENT).getText());
+        Assertions.assertEquals("Welcome sai 123@", driver.findElement(NAME_CLIENT).getText());
 
     }
 
+    @DisplayName("Авторизация с невалидным паролем")
     @org.junit.jupiter.api.Test
-    @Description("Авторизация с невалидным паролем")
     public void wrongPassTest() {
 
         loginPage.sendLogin(LOGIN).
@@ -49,8 +50,8 @@ public class Test {
         Assertions.assertEquals("Invalid credentials", driver.findElement(loginPage.ERROR_MESSAGE).getText());
     }
 
+    @DisplayName("Авторизация без пароля")
     @org.junit.jupiter.api.Test
-    @Description("Авторизация с без пароля")
     public void noPassTest() {
         loginPage.sendLogin(LOGIN).
                 clickButton();
@@ -58,8 +59,26 @@ public class Test {
         Assertions.assertEquals("Password cannot be empty", driver.findElement(loginPage.ERROR_MESSAGE).getText());
     }
 
+    @DisplayName("Авторизация без логина")
     @org.junit.jupiter.api.Test
-    @Description("Авторизация с невалидным логином")
+    public void noLoginTest() {
+        loginPage.sendPassword(PASSWORD).
+                clickButton();
+
+        Assertions.assertEquals("Username cannot be empty", driver.findElement(loginPage.ERROR_MESSAGE).getText());
+    }
+
+    @DisplayName("Авторизация без логина и без пароля")
+    @org.junit.jupiter.api.Test
+    public void noLoginNoPassTest() {
+        loginPage.
+                clickButton();
+
+        Assertions.assertEquals("Username cannot be empty", driver.findElement(loginPage.ERROR_MESSAGE).getText());
+    }
+
+    @DisplayName("Авторизация с невалидным логином")
+    @org.junit.jupiter.api.Test
     public void wrongLogTest() {
         loginPage.sendLogin(WRONG_LOGIN).
                 sendPassword(PASSWORD).
@@ -68,11 +87,11 @@ public class Test {
         Assertions.assertEquals("Invalid credentials", driver.findElement(loginPage.ERROR_MESSAGE).getText());
     }
 
+    @DisplayName("Выход из портала")
     @org.junit.jupiter.api.Test
-    @Description("Выход из портала")
     public void logout() {
         loginPage.singIn();
-        Assertions.assertEquals("Welcome Paul", driver.findElement(NAME_CLIENT).getText());
+        Assertions.assertEquals("Welcome sai 123@", driver.findElement(NAME_CLIENT).getText());
 
         mainPage.clickName().
                 clickExit();
