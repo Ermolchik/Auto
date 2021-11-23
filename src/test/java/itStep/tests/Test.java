@@ -35,7 +35,7 @@ public class Test {
                 sendPassword(PASSWORD).
                 clickButton();
 
-        Assertions.assertEquals("Welcome sai 123@", driver.findElement(NAME_CLIENT).getText());
+        Assertions.assertEquals("Welcome Paul", driver.findElement(NAME_CLIENT).getText());
 
     }
 
@@ -91,7 +91,7 @@ public class Test {
     @org.junit.jupiter.api.Test
     public void logout() {
         loginPage.singIn();
-        Assertions.assertEquals("Welcome sai 123@", driver.findElement(NAME_CLIENT).getText());
+        Assertions.assertEquals("Welcome Paul", driver.findElement(NAME_CLIENT).getText());
 
         mainPage.clickName().
                 clickExit();
